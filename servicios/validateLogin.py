@@ -2,7 +2,7 @@ import csv
 
 def leerFile():
     try:
-        with open("usuarios.csv", "r") as file:
+        with open("archivosCsv/usuarios.csv", "r") as file:
             reader = csv.DictReader(file)
             return list(reader)
     except:
@@ -12,7 +12,7 @@ def leerFile():
 claves = leerFile()
 
 
-def validarLogin():
+def validarLogin() -> bool:
     for i in range(3):
         userName = input("user name: ")
         userPassword = input("user password: ")
