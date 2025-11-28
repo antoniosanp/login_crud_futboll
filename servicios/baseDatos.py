@@ -14,10 +14,10 @@ listaEquipos : list = cargarEquipos()
 
 def guardarEquipos(ruta = "archivosCsv/tablaEquipos.csv"):
     try:
-        with open(ruta,"w", newline="") as file:
+        with open(ruta,"w", newline="",encoding='utf-8') as file:
             encabezado = ["Equipo","jugados","ganados","empatados","perdidos","puntos"]
-            writer = csv.DictWriter(encabezado,listaEquipos)
+            writer = csv.DictWriter(file, fieldnames=encabezado)
             writer.writeheader()
             writer.writerows(listaEquipos)
-    except:
+    except FileExistsError:
         print("error al guardar los datos")
