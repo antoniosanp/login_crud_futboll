@@ -1,5 +1,7 @@
-from servicios.crudEquipos import partidoMenu, printPartidos, printTablaEquipos
+from servicios.crudEquipos import partidoMenu, printPartidos,ordenarEquipos, modificarFechaMenu
 from servicios.validateLogin import validarLogin
+from servicios.baseDatos import historialPartidos
+
 
 login = validarLogin()
 
@@ -9,7 +11,8 @@ while login:
     print("1: Anotar Resultados ")
     print("2: Tabla de Posiciones")
     print("3: Historial de Partidos")
-    print("4: Salir\n")
+    print("4: Modificar fecha")
+    print("5: Salir\n")
 
     opcion = input()
 
@@ -17,10 +20,12 @@ while login:
         case "1":
             partidoMenu()
         case "2":
-            printTablaEquipos()
+            ordenarEquipos()
         case "3":
             printPartidos()
         case "4":
+            modificarFechaMenu()
+        case "5":
             break
         case _: print("opción inválida")
 

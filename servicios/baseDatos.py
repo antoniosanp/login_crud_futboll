@@ -48,3 +48,4 @@ def guardarPartidos(ruta = "archivosCsv/historialPartidos.csv"):
         print("error al guardar los datos")
 
 #----------------------------------------------------------------------------------
+

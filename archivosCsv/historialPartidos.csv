@@ -1,2 +1,13 @@
 fecha,local,visitante,resultado
-1,Medellin,Cali,2 - 4
+1,Medellin,Envigado,2 - 2
+2,Medellin,Cali,2 - 0
+3,Medellin,Santa Fe,1 - 0
+4,Envigado,Medellin,2 - 2
+5,Envigado,Santa Fe,4 - 3
+6,Envigado,Cali,2 - 0
+7,Santa Fe,Medellin,3 - 3
+8,Santa Fe,Envigado,3 - 0
+9,Santa Fe,Cali,2 - 1
+10,Cali,Medellin,2 - 3
+11,Cali,Envigado,5 - 0
+12,Cali,Santa Fe,3 - 1

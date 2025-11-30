@@ -95,6 +95,7 @@ def actualizarTabla(equipoA:dict, equipoB:dict, resultado: str):
         equipoA['perdidos'] = int(equipoA["perdidos"]) + 1
         equipoB['puntos'] = int(equipoB["puntos"]) + 3
     guardarEquipos()
+    guardarPartidos()
 
 def partidoMenu():
     A = validarStr("Equipo local: ")
@@ -135,6 +136,7 @@ def createNewPartido(equipoA:dict, equipoB: dict,golesA: int, golesB: int) -> di
 def addNewPartido(partido:dict):
     historialPartidos.append(partido)
     guardarPartidos()
+    guardarEquipos()
     return
 #----------------------------------------------------------
 
@@ -150,3 +152,65 @@ def printPartido(partido:dict):
 def printPartidos():
     for partido in historialPartidos:
         printPartido(partido)
+
+#--------------------------------------------------------
+
+def ordenarEquipos():
+    ordenados = list(sorted(listaEquipos,key= lambda x:int(x['puntos']), reverse=True))
+    listaEquipos.clear()
+    listaEquipos.extend(ordenados)
+    guardarEquipos()
+    printTablaEquipos()
+
+def findFecha(fecha):
+    for dia in historialPartidos:
+        if str(fecha) == str(dia['fecha']):
+            return dia
+    return None
+
+def modificarFecha(dia: int):
+    fecha = findFecha(dia)
+    if not fecha:
+        print("no se encontró la fecha")
+        return
+    golesA = int(fecha['resultado'][0])
+    golesB = int(fecha['resultado'][-1])
+    equipoA = findEquipo(fecha['local'])
+    equipoB = findEquipo(fecha['visitante'])
+    resultadoActual = calcPatido(golesA,golesB)
+    reiniciarPuntosPartido(equipoA,equipoB,resultadoActual)
+    newGolesA = validarInt(f"Goles de {fecha['local']}: ")
+    newGolesB = validarInt(f"Goles de {fecha['visitante']}: ")
+    newResultado = calcPatido(newGolesA,newGolesB)
+    fecha['resultado'] = str(newGolesA) + " - " + str(newGolesB)
+    
+    actualizarTabla(equipoA,equipoB,newResultado)
+    guardarEquipos()
+    guardarPartidos()
+
+def reiniciarPuntosPartido(equipoA, equipoB, resultado):
+    equipoA['jugados'] = int(equipoA['jugados']) - 1
+    equipoB['jugados'] = int(equipoB['jugados']) - 1
+
+
+    if resultado == "empate":
+        equipoA['empatados'] = int(equipoA["empatados"]) - 1
+        equipoB['empatados'] = int(equipoB["empatados"]) - 1
+        equipoA["puntos"] = int(equipoA["puntos"]) - 1
+        equipoB["puntos"] = int(equipoB["puntos"]) - 1
+    
+    if resultado == "equipoA":
+        equipoA['ganados'] = int(equipoA["ganados"]) - 1
+        equipoB['perdidos'] = int(equipoB["perdidos"]) -1 
+        equipoA['puntos'] = int(equipoA["puntos"]) - 3
+
+    if resultado == "equipoB":
+        equipoB['ganados'] = int(equipoB["ganados"]) - 1
+        equipoA['perdidos'] = int(equipoA["perdidos"]) - 1
+        equipoB['puntos'] = int(equipoB["puntos"]) - 3
+    guardarEquipos()
+    guardarPartidos()
+
+def modificarFechaMenu():
+    fecha = validarInt("Fecha a modificar: ")
+    modificarFecha(fecha)
