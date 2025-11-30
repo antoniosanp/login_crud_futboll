@@ -1,4 +1,4 @@
-from baseDatos import *
+from servicios.baseDatos import *
 
 def validarStr(texto:str) -> str:
     print(texto)
@@ -114,10 +114,39 @@ def partidoMenu():
     resultado = calcPatido(golesA,golesB)
     actualizarTabla(equipoA,equipoB,resultado)
 
+    partido = createNewPartido(equipoA, equipoB, golesA, golesB)
+    addNewPartido(partido)
+
 #--------------------------------------------------------
-printTablaEquipos()
 
-partidoMenu()
-partidoMenu()
+def createNewPartido(equipoA:dict, equipoB: dict,golesA: int, golesB: int) -> dict:
+    # ["fecha","local","visitante","resultado"]
+    newParido = {
+        "fecha" : len(historialPartidos) + 1,
+        "local" : equipoA['Equipo'],
+        "visitante" : equipoB['Equipo'],
+        "golesA" : str(golesA),
+        "golesB" : str(golesB),
+        "resultado" : str(golesA) + " - " + str(golesB)
+    }
 
-printTablaEquipos()
+    return newParido
+
+def addNewPartido(partido:dict):
+    historialPartidos.append(partido)
+    guardarPartidos()
+    return
+#----------------------------------------------------------
+
+def printPartido(partido:dict):
+    fecha = partido['fecha']
+    local = partido['local']
+    visitante = partido['visitante']
+    resultado = partido['resultado']
+
+    print(f"Fecha: {fecha:<5} | {local:<15} | {visitante:<15} | {resultado}")
+    return
+
+def printPartidos():
+    for partido in historialPartidos:
+        printPartido(partido)
